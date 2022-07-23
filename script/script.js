@@ -9,6 +9,8 @@ var Current_Score=0
 
 
 
+
+
 const Rockbtn = document.getElementById("Rockbtn")
 const Paperbtn = document.getElementById("Paperbtn")
 const Scissorbtn = document.getElementById("Scissorbtn")
@@ -23,11 +25,13 @@ Changebtn.addEventListener("click",()=>restart())
 
 function Selected(playerSelection){
     console.log(playerSelection+" "+"player")
+    
     var computerSelection = getComputerChoice()
     var test = PlayRound(playerSelection,computerSelection)
     var game=gameover(p_score,c_score)
-    
-    
+    var score=scoreboard()
+
+    document.getElementById("result2").textContent=(playerSelection+" "+"Seçtiniz"+" "+"Bilgisayar Seçimi ise "+" "+computerSelection)
     return test;
     
     }
@@ -40,7 +44,7 @@ function PlayRound(playerSelection,computerSelection){
     if(playerSelection === computerSelection){
             console.log("draw") 
             console.log("Current Score"+" "+"Player Score"+" "+p_score+" "+"Computer Score"+" "+c_score)
-            
+            document.getElementById("result").innerText=("BERABERE")    
     } if (
         (playerSelection === "Rock" && computerSelection === "Scissor")||
         (playerSelection === "Paper"&& computerSelection === "Rock"  ) ||
@@ -48,8 +52,11 @@ function PlayRound(playerSelection,computerSelection){
         console.log("player win")
         p_score++
         console.log("Current Score"+" "+"Player Score"+" "+p_score+" "+"Computer Score"+" "+c_score)
+        document.getElementById("result").innerText=("Bu Tur Şanslıydın")
         if(p_score>=5){
             console.log("@@@ PLAYER WON @@@@ ")
+            document.getElementById("Final_Result").textContent=("Ucu Ucuna Galipsin!")
+            
         }
     }
     
@@ -59,9 +66,11 @@ function PlayRound(playerSelection,computerSelection){
         (playerSelection ==="Scissor"&&computerSelection ==="Rock")){
         console.log("computer win")
         c_score++
+        document.getElementById("result").innerText=("Bu Tur Yenildin") 
         console.log("Current Score"+" "+"Player Score"+" "+p_score+" "+"Computer Score"+" "+c_score)
         if(c_score>=5){
             console.log("$$$COMPUTER WON $$$")
+            document.getElementById("Final_Result").textContent=("Bilgisayar Tarafından Ezildin")
         } 
     
     }
@@ -70,6 +79,7 @@ function PlayRound(playerSelection,computerSelection){
     function getComputerChoice(){
         var rand = choice[Math.floor(Math.random()*choice.length)] 
         console.log(rand+" "+"computer")
+        
         return rand
         
     }
@@ -80,12 +90,31 @@ function PlayRound(playerSelection,computerSelection){
             document.getElementById("Rockbtn").disabled=true
             document.getElementById("Paperbtn").disabled=true
             document.getElementById("Scissorbtn").disabled=true
+            document.getElementById("info").textContent=("Yeniden oynamak İçin Play again Tuşuna basmalısın.")
         }
     }
-    function restart(){
+    function restart(reset){
        p_score= 0;
        c_score=0;
         document.getElementById("Rockbtn").disabled=false
             document.getElementById("Paperbtn").disabled=false
             document.getElementById("Scissorbtn").disabled=false
+            document.getElementById("presult").innerText=("Player Score:"+ "0")
+            document.getElementById("Computerscore").innerText=("Computer Score:"+ "0 ")
+            document.getElementById("result").textContent=("")
+            document.getElementById("result2").textContent=("")
+            document.getElementById("Final_Result").textContent=("")
+            document.getElementById("info").textContent=("")
+            return reset
     }
+
+    function scoreboard(){
+        document.getElementById("presult").innerText=("Player Score:"+ " "+p_score)
+        document.getElementById("Computerscore").innerText=("Computer Score:"+ " "+c_score)
+        
+        
+
+        
+    }
+
+    
