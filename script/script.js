@@ -1,73 +1,91 @@
-console.log("hello world")
-const choice=["Rock", "Paper", "Scissor"];
-
-var playerSelection=prompt("taş için 1 kağıt için 2 makas için 3 yazın.")
-
-if (playerSelection==1){
-
-      var playerSelection = ("Rock")
-     console.log(playerSelection)
-
-} else if (playerSelection==2){
-
-   var   playerSelection = ("Paper")
-     console.log(playerSelection)
-
-} else if (playerSelection==3){
-
-   var  playerSelection = ("Scissor")
-    console.log(playerSelection)
-
-} else {
-    alert("geçerli bir değer seçmediniz.")
-}
+var p_score = 0;
+var c_score= 0;
+var choice=["Rock", "Paper", "Scissor"];
+var playerSelection=0
+var score = 0
+var Current_Score=0
 
 
 
-function getComputerChoice(){
-    var rand = choice[Math.floor(Math.random()*choice.length)]
-// console.log(rand); 
-    return rand
-}
-// var rand = choice[Math.floor(Math.random()*choice.length)]
 
-var computerSelection=getComputerChoice();
-console.log(computerSelection+" "+"computer selection")
-var sonuc= playRound(playerSelection,computerSelection)
-function playRound(playerSelection,computerSelection) {
-    if (playerSelection=="Rock" && computerSelection=="Scissor"){
-       console.log("win rock beats scissor")
-    } else if(playerSelection =="Rock" && computerSelection=="Paper"){
-       console.log("lose rock cant beat paper")
-    } else if (playerSelection=="Rock" && computerSelection=="Rock"){
-       console.log("draw rock vs rock")
+
+const Rockbtn = document.getElementById("Rockbtn")
+const Paperbtn = document.getElementById("Paperbtn")
+const Scissorbtn = document.getElementById("Scissorbtn")
+Rockbtn.addEventListener("click",()=>Selected("Rock"))
+Paperbtn.addEventListener("click",()=>Selected("Paper"))
+Scissorbtn.addEventListener("click",()=>Selected("Scissor"))
+const Changebtn = document.getElementById("again")
+Changebtn.addEventListener("click",()=>restart())
+
+
+
+
+function Selected(playerSelection){
+    console.log(playerSelection+" "+"player")
+    var computerSelection = getComputerChoice()
+    var test = PlayRound(playerSelection,computerSelection)
+    var game=gameover(p_score,c_score)
+    
+    
+    return test;
+    
     }
+    
+    
 
-    if (playerSelection==="Paper" && computerSelection==="Rock"){
-        console.log("win Paper beat rock")
-    } else if(playerSelection==="Paper" && computerSelection==="Scissor"){
-        console.log("lose paper cant beat scissor")
-    }else if (playerSelection==="Paper" && computerSelection==="Paper"){
-        console.log("draw paper vs paper")
+
+
+function PlayRound(playerSelection,computerSelection){
+    if(playerSelection === computerSelection){
+            console.log("draw") 
+            console.log("Current Score"+" "+"Player Score"+" "+p_score+" "+"Computer Score"+" "+c_score)
+            
+    } if (
+        (playerSelection === "Rock" && computerSelection === "Scissor")||
+        (playerSelection === "Paper"&& computerSelection === "Rock"  ) ||
+        (playerSelection === "Scissor"&&computerSelection === "Paper")) {
+        console.log("player win")
+        p_score++
+        console.log("Current Score"+" "+"Player Score"+" "+p_score+" "+"Computer Score"+" "+c_score)
+        if(p_score>=5){
+            console.log("@@@ PLAYER WON @@@@ ")
+        }
     }
-    if(playerSelection==="Scissor" && computerSelection==="Paper"){
-        console.log("win scissor beat paper")
-    } else if (playerSelection==="Scissor" && computerSelection==="Rock"){
-        console.log("lose Scissor cant beat rock")
-    }else if (playerSelection==="Scissor" && computerSelection==="Scissor"){
-        console.log("draw scissor vs scissor")
+    
+       if (
+        (playerSelection ==="Rock"&&computerSelection ==="Paper")||
+        (playerSelection ==="Paper"&&computerSelection ==="Scissor")||
+        (playerSelection ==="Scissor"&&computerSelection ==="Rock")){
+        console.log("computer win")
+        c_score++
+        console.log("Current Score"+" "+"Player Score"+" "+p_score+" "+"Computer Score"+" "+c_score)
+        if(c_score>=5){
+            console.log("$$$COMPUTER WON $$$")
+        } 
+    
     }
-    return  sonuc;
-}
-
-
-
-// function game(){
-
-    for (let i= 0; i < 5; i++) {
-   playRound(i);
-   console.log(i);
+    
     }
+    function getComputerChoice(){
+        var rand = choice[Math.floor(Math.random()*choice.length)] 
+        console.log(rand+" "+"computer")
+        return rand
+        
+    }
+    
+    function gameover(p_score,c_score){
 
-    // return result;
-// }
+        if ( p_score >= 5 || c_score>= 5 ){
+            document.getElementById("Rockbtn").disabled=true
+            document.getElementById("Paperbtn").disabled=true
+            document.getElementById("Scissorbtn").disabled=true
+        }
+    }
+    function restart(){
+       p_score= 0;
+       c_score=0;
+        document.getElementById("Rockbtn").disabled=false
+            document.getElementById("Paperbtn").disabled=false
+            document.getElementById("Scissorbtn").disabled=false
+    }
